@@ -18,4 +18,11 @@ class RegistrarUsuarioServiceTest {
         String resultado = service.registrarUsuario("", "clave1234", "mail@edu.com", 20);
         assertEquals("Debe completar todos los campos requeridos", resultado);
     }
+
+    @Test
+    void deberiaFallarCuandoUsernameEsInvalido() {
+        RegistrarUsuarioService service = new RegistrarUsuarioService();
+        String resultado = service.registrarUsuario("us 1", "clave1234", "mail@edu.com", 20);
+        assertEquals("El nombre de usuario no es válido", resultado);
+    }
 }
