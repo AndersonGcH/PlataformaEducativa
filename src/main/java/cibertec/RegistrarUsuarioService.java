@@ -11,6 +11,10 @@ public class RegistrarUsuarioService {
             return "Debe completar todos los campos requeridos";
         }
 
+        if (!usuario.matches("^[a-zA-Z0-9]{6,12}$")) {
+            return "El nombre de usuario no es válido";
+        }
+
         return "El usuario ha sido registrado correctamente";
 
     }
