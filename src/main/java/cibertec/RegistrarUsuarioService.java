@@ -15,6 +15,10 @@ public class RegistrarUsuarioService {
                 password.matches(".*\\d.*");
     }
 
+    private boolean emailValido(String correo) {
+        return correo.length() >= 8 && correo.contains("@");
+    }
+
     public String registrarUsuario(String usuario, String contrasenia, String correo, Integer edad) {
 
         if (estaVacio(usuario) || estaVacio(contrasenia) || estaVacio(correo) || edad == null) {
@@ -29,7 +33,7 @@ public class RegistrarUsuarioService {
             return "La contraseña debe tener al menos 8 caracteres y contener letras y números";
         }
 
-        if (correo.length() < 8 || !correo.contains("@")) {
+        if (!emailValido(correo)) {
             return "Ingrese un correo electrónico válido";
         }
 
