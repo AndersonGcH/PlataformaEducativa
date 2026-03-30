@@ -5,13 +5,17 @@ public class RegistrarUsuarioService {
         return valor == null || valor.trim().isEmpty();
     }
 
+    private boolean usernameValido(String usuario) {
+        return usuario.matches("^[a-zA-Z0-9]{6,12}$");
+    }
+
     public String registrarUsuario(String usuario, String contrasenia, String correo, Integer edad) {
 
         if (estaVacio(usuario) || estaVacio(contrasenia) || estaVacio(correo) || edad == null) {
             return "Debe completar todos los campos requeridos";
         }
 
-        if (!usuario.matches("^[a-zA-Z0-9]{6,12}$")) {
+        if (!usernameValido(usuario)) {
             return "El nombre de usuario no es válido";
         }
 
