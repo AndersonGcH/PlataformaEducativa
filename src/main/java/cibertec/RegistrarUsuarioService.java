@@ -37,6 +37,10 @@ public class RegistrarUsuarioService {
             return "Ingrese un correo electrónico válido";
         }
 
+        if (edad < 18) {
+            return "Debe ser mayor de edad para registrarse";
+        }
+
         return "El usuario ha sido registrado correctamente";
 
     }
