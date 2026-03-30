@@ -19,6 +19,10 @@ public class RegistrarUsuarioService {
         return correo.length() >= 8 && correo.contains("@");
     }
 
+    private boolean edadValida(Integer edad) {
+        return edad >= 18;
+    }
+
     public String registrarUsuario(String usuario, String contrasenia, String correo, Integer edad) {
 
         if (estaVacio(usuario) || estaVacio(contrasenia) || estaVacio(correo) || edad == null) {
@@ -37,7 +41,7 @@ public class RegistrarUsuarioService {
             return "Ingrese un correo electrónico válido";
         }
 
-        if (edad < 18) {
+        if (!edadValida(edad)) {
             return "Debe ser mayor de edad para registrarse";
         }
 
