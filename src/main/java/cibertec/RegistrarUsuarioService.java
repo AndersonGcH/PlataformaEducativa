@@ -29,6 +29,10 @@ public class RegistrarUsuarioService {
             return "La contraseña debe tener al menos 8 caracteres y contener letras y números";
         }
 
+        if (correo.length() < 8 || !correo.contains("@")) {
+            return "Ingrese un correo electrónico válido";
+        }
+
         return "El usuario ha sido registrado correctamente";
 
     }
