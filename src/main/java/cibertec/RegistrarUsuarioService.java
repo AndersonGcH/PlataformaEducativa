@@ -9,6 +9,12 @@ public class RegistrarUsuarioService {
         return usuario.matches("^[a-zA-Z0-9]{6,12}$");
     }
 
+    private boolean passwordValida(String password) {
+        return password.length() >= 8 &&
+                password.matches(".*[A-Za-z].*") &&
+                password.matches(".*\\d.*");
+    }
+
     public String registrarUsuario(String usuario, String contrasenia, String correo, Integer edad) {
 
         if (estaVacio(usuario) || estaVacio(contrasenia) || estaVacio(correo) || edad == null) {
@@ -19,7 +25,7 @@ public class RegistrarUsuarioService {
             return "El nombre de usuario no es válido";
         }
 
-        if (contrasenia.length() < 8 || !contrasenia.matches(".*[A-Za-z].*") || !contrasenia.matches(".*\\d.*")) {
+        if (!passwordValida(contrasenia)) {
             return "La contraseña debe tener al menos 8 caracteres y contener letras y números";
         }
 
