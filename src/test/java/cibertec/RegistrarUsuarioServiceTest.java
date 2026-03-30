@@ -39,4 +39,11 @@ class RegistrarUsuarioServiceTest {
         String resultado = service.registrarUsuario("user123", "clave1234", "mail.edu", 20);
         assertEquals("Ingrese un correo electrónico válido", resultado);
     }
+
+    @Test
+    void deberiaFallarCuandoEdadEsMenorDe18() {
+        RegistrarUsuarioService service = new RegistrarUsuarioService();
+        String resultado = service.registrarUsuario("user123", "clave1234", "mail@edu.com", 17);
+        assertEquals("Debe ser mayor de edad para registrarse", resultado);
+    }
 }
