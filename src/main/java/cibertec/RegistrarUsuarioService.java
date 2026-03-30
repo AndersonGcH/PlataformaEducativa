@@ -19,6 +19,10 @@ public class RegistrarUsuarioService {
             return "El nombre de usuario no es válido";
         }
 
+        if (contrasenia.length() < 8 || !contrasenia.matches(".*[A-Za-z].*") || !contrasenia.matches(".*\\d.*")) {
+            return "La contraseña debe tener al menos 8 caracteres y contener letras y números";
+        }
+
         return "El usuario ha sido registrado correctamente";
 
     }
