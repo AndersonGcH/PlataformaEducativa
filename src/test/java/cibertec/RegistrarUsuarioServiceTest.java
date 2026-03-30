@@ -25,4 +25,11 @@ class RegistrarUsuarioServiceTest {
         String resultado = service.registrarUsuario("us 1", "clave1234", "mail@edu.com", 20);
         assertEquals("El nombre de usuario no es válido", resultado);
     }
+
+    @Test
+    void deberiaFallarCuandoPasswordNoCumpleReglas() {
+        RegistrarUsuarioService service = new RegistrarUsuarioService();
+        String resultado = service.registrarUsuario("user123", "soloabcd", "mail@edu.com", 20);
+        assertEquals("La contraseña debe tener al menos 8 caracteres y contener letras y números", resultado);
+    }
 }
