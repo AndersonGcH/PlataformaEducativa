@@ -6,6 +6,7 @@ import com.plataforma.notificacionesms.dto.NotificationEvent;
 import com.plataforma.notificacionesms.model.Notification;
 import com.plataforma.notificacionesms.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationRepository notificationRepository;
@@ -67,6 +69,7 @@ public class NotificationServiceImpl implements NotificationService {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
+            log.warn("No se pudo serializar metadata de notificación", e);
             return "{}";
         }
     }

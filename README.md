@@ -22,7 +22,7 @@ RabbitMQ UI: `http://localhost:15672` (guest/guest)
 ## Ejecutar microservicio de notificaciones
 
 ```bash
-cd /home/runner/work/PlataformaEducativa/PlataformaEducativa/AndersonGcH/PlataformaEducativa/NotificacionesMS
+cd NotificacionesMS
 mvn spring-boot:run
 ```
 

@@ -6,8 +6,12 @@ import cibertec.notificaciones.NotificationEventPublisher;
 
 import java.time.Instant;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RegistrarUsuarioService {
+
+    private static final Logger LOGGER = Logger.getLogger(RegistrarUsuarioService.class.getName());
 
     private final NotificationEventPublisher notificationEventPublisher;
 
@@ -79,8 +83,8 @@ public class RegistrarUsuarioService {
 
         try {
             notificationEventPublisher.publish(event);
-        } catch (Exception ignored) {
-            // El registro del usuario no debe fallar por problemas de notificaciones.
+        } catch (Exception exception) {
+            LOGGER.log(Level.WARNING, "No se pudo publicar la notificación de registro", exception);
         }
     }
 }
