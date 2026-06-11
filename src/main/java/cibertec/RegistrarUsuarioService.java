@@ -84,7 +84,7 @@ public class RegistrarUsuarioService {
         try {
             notificationEventPublisher.publish(event);
         } catch (Exception exception) {
-            LOGGER.log(Level.WARNING, "No se pudo publicar la notificación de registro", exception);
+            LOGGER.log(Level.WARNING, "No se pudo publicar la notificación de registro para usuario " + usuario + " y correo " + correo, exception);
         }
     }
 }

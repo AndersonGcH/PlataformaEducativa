@@ -69,7 +69,7 @@ public class NotificationServiceImpl implements NotificationService {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            log.warn("No se pudo serializar metadata de notificación", e);
+            log.warn("No se pudo serializar metadata de notificación. Tipo de metadata: {}", value.getClass().getName(), e);
             return "{}";
         }
     }
