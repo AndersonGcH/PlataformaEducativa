@@ -1,5 +1,7 @@
 package cibertec;
 
+import cibertec.notificaciones.NotificationEvent;
+import cibertec.notificaciones.NotificationEventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +20,19 @@ class RegistrarUsuarioServiceTest {
     void deberiaRegistrarUsuarioCuandoTodosLosDatosSonValidos() {
         String resultado = service.registrarUsuario("user123", "clave1234", "mail@edu.com", 20);
         assertEquals("El usuario ha sido registrado correctamente", resultado);
+    }
+
+    @Test
+    void deberiaPublicarEventoCuandoRegistroEsValido() {
+        EventCollector collector = new EventCollector();
+        RegistrarUsuarioService localService = new RegistrarUsuarioService(collector);
+
+        String resultado = localService.registrarUsuario("user123", "clave1234", "mail@edu.com", 20);
+
+        assertEquals("El usuario ha sido registrado correctamente", resultado);
+        assertNotNull(collector.lastEvent);
+        assertEquals("USUARIO_REGISTRADO", collector.lastEvent.tipo());
+        assertEquals("mail@edu.com", collector.lastEvent.destinatario());
     }
 
     @Test
@@ -48,5 +63,14 @@ class RegistrarUsuarioServiceTest {
     void deberiaFallarCuandoEdadEsMenorDe18() {
         String resultado = service.registrarUsuario("user123", "clave1234", "mail@edu.com", 17);
         assertEquals("Debe ser mayor de edad para registrarse", resultado);
+    }
+
+    private static class EventCollector implements NotificationEventPublisher {
+        private NotificationEvent lastEvent;
+
+        @Override
+        public void publish(NotificationEvent event) {
+            this.lastEvent = event;
+        }
     }
 }

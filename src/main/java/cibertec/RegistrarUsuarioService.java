@@ -1,6 +1,24 @@
 package cibertec;
 
+import cibertec.notificaciones.NoOpNotificationEventPublisher;
+import cibertec.notificaciones.NotificationEvent;
+import cibertec.notificaciones.NotificationEventPublisher;
+
+import java.time.Instant;
+import java.util.Map;
+
 public class RegistrarUsuarioService {
+
+    private final NotificationEventPublisher notificationEventPublisher;
+
+    public RegistrarUsuarioService() {
+        this(new NoOpNotificationEventPublisher());
+    }
+
+    public RegistrarUsuarioService(NotificationEventPublisher notificationEventPublisher) {
+        this.notificationEventPublisher = notificationEventPublisher;
+    }
+
     private boolean estaVacio(String valor) {
         return valor == null || valor.trim().isEmpty();
     }
@@ -45,7 +63,24 @@ public class RegistrarUsuarioService {
             return "Debe ser mayor de edad para registrarse";
         }
 
+        publicarEventoRegistro(usuario, correo, edad);
         return "El usuario ha sido registrado correctamente";
+    }
 
+    private void publicarEventoRegistro(String usuario, String correo, Integer edad) {
+        NotificationEvent event = new NotificationEvent(
+                "USUARIO_REGISTRADO",
+                "Nuevo registro en PlataformaEducativa",
+                "Se registró el usuario " + usuario,
+                correo,
+                Instant.now().toEpochMilli(),
+                Map.of("usuario", usuario, "edad", edad)
+        );
+
+        try {
+            notificationEventPublisher.publish(event);
+        } catch (Exception ignored) {
+            // El registro del usuario no debe fallar por problemas de notificaciones.
+        }
     }
 }
